@@ -2,7 +2,8 @@
 
 #define CHANCE_NUMBER 3
 
-int main() {
+int main()
+{
   printf("********************************\n");
   printf("Bem vindo ao jogo da adivinhação\n");
   printf("********************************\n");
@@ -11,16 +12,39 @@ int main() {
 
   int value;
   int chance = 1;
-  int score = 1000;
+  double score = 1000;
 
-  while(1) {
+  int correct = 0;
+
+  int level;
+
+  printf("Qual nível de dificuldade?\n");
+  printf("(1) Fácil (2) Médio (3) Difícil\n\n");
+  printf("Escolha: ");
+  scanf("%d", &level);
+
+  int chanceNumber;
+  switch (level) {
+    case 1:
+      chanceNumber = 20;
+      break;
+    case 2:
+      chanceNumber = 15;
+    default:
+      chanceNumber = 5;
+      break;
+  }
+
+  for (int i = 1; i <= chanceNumber; i++)
+  {
     printf("Tetativa %d\n", chance);
     printf("Qual é o número sorteado?\n");
 
     scanf("%d", &value);
     printf("Seu chute foi %d\n", value);
-    
-    if(value < 0) {
+
+    if (value < 0)
+    {
       printf("O número não pode ser negativo!");
       continue;
     }
@@ -28,28 +52,44 @@ int main() {
     int correct = value == secretNumber;
     int bigger = value > secretNumber;
 
-    if(correct) {
-      printf("Parabéns você acertou!!!\n");
-      printf("Sua pontuação foi de %d", score);
+    if (correct)
+    {
       break;
-    } else if(bigger) {
-        printf("É maior que o número secreto\n");
-
-    } else {
-        printf("É menor que o número secreto\n");
+    }
+    else if (bigger)
+    {
+      printf("É maior que o número secreto\n");
+    }
+    else
+    {
+      printf("É menor que o número secreto\n");
     }
 
-    chance ++;
-    
-    int scoreLose = (value - secretNumber) / 2;
-    
-    score = score - scoreLose;
+    chance++;
 
+    double scoreLose = (value - secretNumber) / (double)2;
+
+    if (scoreLose < 0)
+    {
+      scoreLose = scoreLose * -1;
+    }
+
+    score = score - scoreLose;
+  }
+
+  if (correct)
+  {
+    printf("Parabéns você acertou!!!\n");
+    printf("Sua pontuação foi de %f", score);
+  }
+  else
+  {
+    printf("Você perdeu\n");
   }
 
   printf("Fim de jogo!\n");
   printf("Você acertou em %d tentativas!\n", chance);
-  printf("Total de pontos: %d\n", score);
-  
+  printf("Total de pontos: %.2f\n", score);
+
   return 0;
 }
