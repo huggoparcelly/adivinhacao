@@ -1,6 +1,6 @@
 #include <stdio.h>
-
-#define CHANCE_NUMBER 3
+#include <stdlib.h>
+#include <time.h>
 
 int main()
 {
@@ -8,7 +8,9 @@ int main()
   printf("Bem vindo ao jogo da adivinhação\n");
   printf("********************************\n");
 
-  int secretNumber = 42;
+  int secounds = time(0);
+  srand(secounds);
+  int secretNumber = rand() % 100;
 
   int value;
   int chance = 1;
